@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
               child: Button(
                 icon: Icons.add,
                 label: "Nova refeição",
-                onPressed: () {},
+                onPressed: () => Navigator.pushNamed(context, '/new'),
               ),
             ),
             Expanded(
@@ -116,9 +116,7 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, dynamic element) => Padding(
                   padding: const EdgeInsets.fromLTRB(0, 2, 0, 2),
                   child: GestureDetector(
-                    onTap: () {
-                      print(element);
-                    },
+                    onTap: () => Navigator.pushNamed(context, '/details'),
                     child: Card(
                       elevation: 0,
                       shape: const RoundedRectangleBorder(

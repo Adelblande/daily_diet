@@ -31,9 +31,7 @@ class CardStatistic extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        print('navegue abestadooo');
-      },
+      onTap: () => Navigator.pushNamed(context, '/statistics'),
       child: Card(
         elevation: 0,
         color: colorCard,
