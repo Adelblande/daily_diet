@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../themes/colors.dart';
 
-class CardStatistic extends StatelessWidget {
+class CardStatistics extends StatelessWidget {
   final Color colorCard;
-  final Color colorIcon;
+  final Color? colorIcon;
   final String title;
   final String description;
+  final Function()? onTap;
+  final bool hasIcon;
 
   final titleStyle = const TextStyle(
     fontSize: 30,
@@ -20,18 +22,20 @@ class CardStatistic extends StatelessWidget {
     color: AppColors.gray2,
   );
 
-  const CardStatistic({
+  const CardStatistics({
     Key? key,
     required this.colorCard,
-    required this.colorIcon,
     required this.title,
     required this.description,
+    this.colorIcon,
+    this.onTap,
+    this.hasIcon = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, '/statistics'),
+      onTap: onTap,
       child: Card(
         elevation: 0,
         color: colorCard,
@@ -51,17 +55,19 @@ class CardStatistic extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.north_east,
-                      color: colorIcon,
-                      size: 30,
+                      color: hasIcon ? colorIcon : Colors.transparent,
+                      size: 24,
                     ),
                   ],
                 ),
                 Text(
                   title,
+                  textAlign: TextAlign.center,
                   style: titleStyle,
                 ),
                 Text(
                   description,
+                  textAlign: TextAlign.center,
                   style: descriptionStyle,
                 )
               ],

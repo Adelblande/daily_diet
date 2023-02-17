@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:grouped_list/grouped_list.dart';
 
 import '../components/button.dart';
-import '../components/card_statistic.dart';
+import '../components/card_statistics.dart';
 import '../components/header.dart';
 import '../themes/colors.dart';
 
@@ -20,45 +20,84 @@ class _HomePageState extends State<HomePage> {
       'id': '10',
       'createdDate': '2023-02-08',
       'createdTime': '08:15',
-      'name': 'Suco de laranja'
+      'name': 'Suco de laranja',
+      'isOnTheDiet': true
     },
     {
       'id': '1',
       'createdDate': '2023-02-08',
       'createdTime': '01:05',
-      'name': 'X-tudo'
+      'name': 'X-tudo',
+      'isOnTheDiet': false
     },
     {
       'id': '21',
       'createdDate': '2023-02-07',
       'createdTime': '14:05',
-      'name': 'Bife à role'
+      'name': 'Bife à role',
+      'isOnTheDiet': true
     },
     {
       'id': '22',
       'createdDate': '2023-02-07',
       'createdTime': '14:35',
-      'name': 'Sorvete de chocolate'
+      'name': 'Sorvete de chocolate',
+      'isOnTheDiet': false
     },
     {
       'id': '23',
       'createdDate': '2023-02-07',
       'createdTime': '20:05',
-      'name': 'Vitamina de banana'
+      'name': 'Vitamina de banana',
+      'isOnTheDiet': true
     },
     {
       'id': '3',
       'createdDate': '2023-02-05',
       'createdTime': '15:30',
-      'name': 'Frango com salada'
+      'name': 'Frango com salada',
+      'isOnTheDiet': true
     },
     {
       'id': '4',
       'createdDate': '2023-02-05',
       'createdTime': '16:30',
-      'name': 'Suco de laranja'
+      'name': 'Suco de laranja',
+      'isOnTheDiet': true
     },
   ];
+
+  bool isOnTheDiet = false;
+
+  navigateToStatistics() {
+    Navigator.pushNamed(
+      context,
+      '/statistics',
+      arguments: {
+        'isOnTheDiet': isOnTheDiet,
+        'colorCard': isOnTheDiet ? AppColors.greenLight : AppColors.redLight,
+        'colorIcon': isOnTheDiet ? AppColors.greenDark : AppColors.redDark,
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    var qtdItsDiet = 0;
+    var qtdItsNotDiet = 0;
+    for (var element in snackList) {
+      {
+        if (element['isOnTheDiet']) {
+          qtdItsDiet++;
+        } else {
+          qtdItsNotDiet++;
+        }
+      }
+    }
+    setState(() {
+      isOnTheDiet = qtdItsDiet > qtdItsNotDiet ? true : false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,16 +107,20 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             const Expanded(
-              flex: 1,
+              flex: 2,
               child: Header(),
             ),
-            const Expanded(
+            Expanded(
               flex: 3,
-              child: CardStatistic(
-                colorCard: AppColors.greenLight,
-                colorIcon: AppColors.greenDark,
+              child: CardStatistics(
+                hasIcon: true,
+                colorCard:
+                    isOnTheDiet ? AppColors.greenLight : AppColors.redLight,
+                colorIcon:
+                    isOnTheDiet ? AppColors.greenDark : AppColors.redDark,
                 title: "90,86%",
                 description: "das refeições dentro da dieta",
+                onTap: () => navigateToStatistics(),
               ),
             ),
             Expanded(
@@ -126,30 +169,49 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                       ),
                       child: SizedBox(
-                        width: double.infinity,
+                        width: MediaQuery.of(context).size.width,
                         height: 50,
-                        child: Container(
-                            padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                            alignment: Alignment.centerLeft,
-                            child: Text.rich(
-                              TextSpan(
-                                children: <TextSpan>[
-                                  TextSpan(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+                              alignment: Alignment.centerLeft,
+                              child: Text.rich(
+                                TextSpan(
+                                  children: <TextSpan>[
+                                    TextSpan(
                                       text: element['createdTime'],
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          color: AppColors.gray1)),
-                                  const TextSpan(
+                                          color: AppColors.gray1),
+                                    ),
+                                    const TextSpan(
                                       text: '  |  ',
-                                      style: TextStyle(color: AppColors.gray4)),
-                                  TextSpan(
+                                      style: TextStyle(color: AppColors.gray4),
+                                    ),
+                                    TextSpan(
                                       text: element['name'],
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w500,
-                                          color: AppColors.gray2)),
-                                ],
+                                          color: AppColors.gray2),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            )),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: Icon(
+                                Icons.circle,
+                                color: element['isOnTheDiet']
+                                    ? AppColors.greenMid
+                                    : AppColors.redMid,
+                                size: 18,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
