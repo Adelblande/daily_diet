@@ -81,6 +81,19 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  navigateToDetails(meal) {
+    Navigator.pushNamed(
+      context,
+      '/details',
+      arguments: {
+        'meal': meal,
+        'colorCard':
+            meal['isOnTheDiet'] ? AppColors.greenLight : AppColors.redLight,
+        'colorIcon': AppColors.gray1,
+      },
+    );
+  }
+
   @override
   void initState() {
     var qtdItsDiet = 0;
@@ -159,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, dynamic element) => Padding(
                   padding: const EdgeInsets.fromLTRB(0, 2, 0, 2),
                   child: GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, '/details'),
+                    onTap: () => navigateToDetails(element),
                     child: Card(
                       elevation: 0,
                       shape: const RoundedRectangleBorder(
