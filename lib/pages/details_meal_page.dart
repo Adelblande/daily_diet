@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../components/button.dart';
 import '../themes/colors.dart';
 
 class DetailsMealPage extends StatefulWidget {
@@ -35,14 +36,40 @@ class _DetailsMealPageState extends State<DetailsMealPage> {
           //   ),
           // ),
           Expanded(
-            flex: 9,
+            flex: 8,
             child: Container(
+              padding: const EdgeInsets.all(20),
               decoration: const BoxDecoration(
                 color: AppColors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20),
                 ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              decoration: const BoxDecoration(
+                color: AppColors.white,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Button(
+                    icon: Icons.edit,
+                    label: "Editar refeição",
+                    onPressed: () => Navigator.pushNamed(context, '/edit'),
+                  ),
+                  Button(
+                    icon: Icons.delete_outline,
+                    label: "Excluir refeição",
+                    onPressed: () => Navigator.pushNamed(context, '/new'),
+                    outlined: true,
+                  ),
+                ],
               ),
             ),
           ),
