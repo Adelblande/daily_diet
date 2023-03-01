@@ -39,6 +39,52 @@ class _DetailsMealPageState extends State<DetailsMealPage> {
     String createdTime = data['meal']['createdTime'];
     bool isOnTheDiet = data['meal']['isOnTheDiet'];
 
+    confirmDelete() {
+      return showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          insetPadding: const EdgeInsets.all(20),
+          contentPadding: const EdgeInsets.all(30),
+          buttonPadding: const EdgeInsets.all(24),
+          content: const Text(
+            'Deseja realmente excluir o registro da refeição?',
+            textAlign: TextAlign.center,
+            style: subtitleStyle,
+          ),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: 150,
+                  child: Button(
+                    label: "Cancelar",
+                    onPressed: () => Navigator.pushNamed(context, '/edit'),
+                    outlined: true,
+                  ),
+                ),
+                SizedBox(
+                  width: 150,
+                  child: Button(
+                    label: "Sim, excluir",
+                    onPressed: () => Navigator.pushNamed(context, '/edit'),
+                  ),
+                ),
+              ],
+            ),
+            // TextButton(
+            //   onPressed: () => Navigator.pop(context, 'Cancel'),
+            //   child: const Text('Cancel'),
+            // ),
+            // TextButton(
+            //   onPressed: () => Navigator.pop(context, 'OK'),
+            //   child: const Text('OK'),
+            // ),
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: data['colorCard'],
       appBar: AppBar(
@@ -150,7 +196,7 @@ class _DetailsMealPageState extends State<DetailsMealPage> {
                   Button(
                     icon: Icons.delete_outline,
                     label: "Excluir refeição",
-                    onPressed: () => Navigator.pushNamed(context, '/new'),
+                    onPressed: confirmDelete,
                     outlined: true,
                   ),
                 ],

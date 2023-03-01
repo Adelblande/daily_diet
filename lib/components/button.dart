@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../themes/colors.dart';
 
 class Button extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
   final String label;
   final bool? outlined;
   final Function()? onPressed;
 
   const Button({
     Key? key,
-    required this.icon,
+    this.icon,
     required this.label,
     this.onPressed,
     this.outlined = false,
@@ -35,9 +35,12 @@ class Button extends StatelessWidget {
       height: 50,
       child: ElevatedButton.icon(
         onPressed: onPressed,
-        icon: Icon(
-          icon,
-          color: colorText,
+        icon: Visibility(
+          visible: icon != null ? true : false,
+          child: Icon(
+            icon,
+            color: colorText,
+          ),
         ),
         label: Text(
           label,
