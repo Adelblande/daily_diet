@@ -21,6 +21,8 @@ class _HomePageState extends State<HomePage> {
       'createdDate': '2023-02-08',
       'createdTime': '08:15',
       'name': 'Suco de laranja',
+      'description':
+          'Suco de laranja feito com 5 laranjas colhida direto do laranjal.',
       'isOnTheDiet': true
     },
     {
@@ -28,13 +30,16 @@ class _HomePageState extends State<HomePage> {
       'createdDate': '2023-02-08',
       'createdTime': '01:05',
       'name': 'X-tudo',
+      'description':
+          'Delicioso sanduba com direito a tudo que há de mais saboroso.',
       'isOnTheDiet': false
     },
     {
       'id': '21',
       'createdDate': '2023-02-07',
       'createdTime': '14:05',
-      'name': 'Bife à role',
+      'name': 'Bife à milanesa',
+      'description': 'Bifão que parece uma laje empanado no segredo da vovó.',
       'isOnTheDiet': true
     },
     {
@@ -42,6 +47,7 @@ class _HomePageState extends State<HomePage> {
       'createdDate': '2023-02-07',
       'createdTime': '14:35',
       'name': 'Sorvete de chocolate',
+      'description': 'Delicioso sorvete da refrigerado na geleira do himalaia.',
       'isOnTheDiet': false
     },
     {
@@ -49,6 +55,8 @@ class _HomePageState extends State<HomePage> {
       'createdDate': '2023-02-07',
       'createdTime': '20:05',
       'name': 'Vitamina de banana',
+      'description':
+          'Só banana nanica e leite mesmo batido no liquidificar véio.',
       'isOnTheDiet': true
     },
     {
@@ -56,6 +64,8 @@ class _HomePageState extends State<HomePage> {
       'createdDate': '2023-02-05',
       'createdTime': '15:30',
       'name': 'Frango com salada',
+      'description':
+          'Galeto véio cansado frito na gordura de 3 meses com salada.',
       'isOnTheDiet': true
     },
     {
@@ -63,6 +73,8 @@ class _HomePageState extends State<HomePage> {
       'createdDate': '2023-02-05',
       'createdTime': '16:30',
       'name': 'Suco de laranja',
+      'description':
+          'Suco de laranja feito com 5 laranjas colhida direto do laranjal.',
       'isOnTheDiet': true
     },
   ];

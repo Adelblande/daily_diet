@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../components/button.dart';
 import '../themes/colors.dart';
@@ -13,8 +14,30 @@ class DetailsMealPage extends StatefulWidget {
 class _DetailsMealPageState extends State<DetailsMealPage> {
   @override
   Widget build(BuildContext context) {
+    const titleStyle = TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+      color: AppColors.gray1,
+    );
+
+    const subtitleStyle = TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+      color: AppColors.gray1,
+    );
+
+    const descriptionStyle = TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      color: AppColors.gray2,
+    );
+
     Map data = ModalRoute.of(context)!.settings.arguments as Map;
     String name = data['meal']['name'];
+    String description = data['meal']['description'];
+    String createdDate = data['meal']['createdDate'];
+    String createdTime = data['meal']['createdTime'];
+    bool isOnTheDiet = data['meal']['isOnTheDiet'];
 
     return Scaffold(
       backgroundColor: data['colorCard'],
@@ -28,23 +51,84 @@ class _DetailsMealPageState extends State<DetailsMealPage> {
       ),
       body: Column(
         children: [
-          // Expanded(
-          //   flex: 1,
-          //   child: Container(
-          //     height: 30,
-          //     color: data['colorCard'],
-          //   ),
-          // ),
           Expanded(
             flex: 8,
             child: Container(
               padding: const EdgeInsets.all(20),
+              width: double.infinity,
               decoration: const BoxDecoration(
                 color: AppColors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20),
                 ),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Text(
+                      name,
+                      style: titleStyle,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Text(
+                      description,
+                      style: descriptionStyle,
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 20, bottom: 10),
+                    child: Text(
+                      'Data e hora',
+                      style: subtitleStyle,
+                    ),
+                  ),
+                  Text.rich(
+                      TextSpan(style: descriptionStyle, children: <TextSpan>[
+                    TextSpan(
+                      text: DateFormat('dd/MM/yy').format(
+                        DateTime.parse(createdDate),
+                      ),
+                    ),
+                    const TextSpan(text: ' às '),
+                    TextSpan(text: createdTime),
+                  ])),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20, bottom: 20),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: AppColors.gray6,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
+                      width: 160,
+                      height: 32,
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: Icon(
+                              Icons.circle,
+                              color: isOnTheDiet
+                                  ? AppColors.greenMid
+                                  : AppColors.redMid,
+                              size: 12,
+                            ),
+                          ),
+                          Text(
+                            isOnTheDiet ? 'dentro da dieta' : 'fora da dieta',
+                            style: descriptionStyle,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
