@@ -33,11 +33,21 @@ class _DetailsMealPageState extends State<DetailsMealPage> {
     );
 
     Map data = ModalRoute.of(context)!.settings.arguments as Map;
+    String id = data['meal']['id'];
     String name = data['meal']['name'];
     String description = data['meal']['description'];
     String createdDate = data['meal']['createdDate'];
     String createdTime = data['meal']['createdTime'];
     bool isOnTheDiet = data['meal']['isOnTheDiet'];
+
+    handleCancel() {
+      Navigator.pop(context);
+    }
+
+    handleConfirm(String id) {
+      Navigator.pop(context);
+      print('vai excluir essa porra mesmo $id');
+    }
 
     confirmDelete() {
       return showDialog<String>(
@@ -59,7 +69,7 @@ class _DetailsMealPageState extends State<DetailsMealPage> {
                   width: 150,
                   child: Button(
                     label: "Cancelar",
-                    onPressed: () => Navigator.pushNamed(context, '/edit'),
+                    onPressed: handleCancel,
                     outlined: true,
                   ),
                 ),
@@ -67,19 +77,11 @@ class _DetailsMealPageState extends State<DetailsMealPage> {
                   width: 150,
                   child: Button(
                     label: "Sim, excluir",
-                    onPressed: () => Navigator.pushNamed(context, '/edit'),
+                    onPressed: () => handleConfirm(id),
                   ),
                 ),
               ],
             ),
-            // TextButton(
-            //   onPressed: () => Navigator.pop(context, 'Cancel'),
-            //   child: const Text('Cancel'),
-            // ),
-            // TextButton(
-            //   onPressed: () => Navigator.pop(context, 'OK'),
-            //   child: const Text('OK'),
-            // ),
           ],
         ),
       );
