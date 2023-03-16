@@ -5,12 +5,16 @@ class Input extends StatelessWidget {
   final String label;
   final int? maxline;
   final String? Function(String? text)? validator;
+  final String? Function(String? value)? onSaved;
+  final DateTime? Function()? onTap;
 
   const Input({
     Key? key,
     required this.label,
     this.validator,
     this.maxline,
+    this.onTap,
+    this.onSaved,
   }) : super(key: key);
 
   @override
@@ -34,8 +38,9 @@ class Input extends StatelessWidget {
           TextFormField(
             maxLines: maxline ?? 1,
             validator: validator,
+            onSaved: onSaved,
+            onTap: onTap,
             decoration: const InputDecoration(
-              // labelText: label,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(6)),
               ),

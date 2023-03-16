@@ -1,4 +1,6 @@
 import 'package:daily_diet/components/input.dart';
+import 'package:daily_diet/components/inputDate.dart';
+import 'package:daily_diet/components/inputTime.dart';
 import 'package:flutter/material.dart';
 
 import '../components/button.dart';
@@ -12,14 +14,19 @@ class NewMealPage extends StatefulWidget {
 }
 
 class _NewMealPageState extends State<NewMealPage> {
+  final form = GlobalKey<FormState>();
+  final Map<String, String> formData = {};
+
+  handleSend() {
+    final isValid = form.currentState?.validate();
+    if (isValid!) {
+      form.currentState?.save();
+      debugPrint('Form-->$formData');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final formkey = GlobalKey<FormState>();
-
-    handleSend() {
-      formkey.currentState?.validate();
-    }
-
     return Scaffold(
       backgroundColor: AppColors.gray5,
       appBar: AppBar(
@@ -31,8 +38,8 @@ class _NewMealPageState extends State<NewMealPage> {
         toolbarHeight: 80,
       ),
       body: Form(
-        key: formkey,
-        autovalidateMode: AutovalidateMode.always,
+        key: form,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: [
             Expanded(
@@ -47,22 +54,51 @@ class _NewMealPageState extends State<NewMealPage> {
                     topRight: Radius.circular(20),
                   ),
                 ),
-                child: Column(
-                  children: [
-                    Input(
-                      label: "Name",
-                      validator: (text) => text == null || text.isEmpty
-                          ? "Preencha o campo Nome"
-                          : null,
-                    ),
-                    Input(
-                      label: "Descrição",
-                      maxline: 5,
-                      validator: (text) => text == null || text.isEmpty
-                          ? "Preencha o campo Descrição"
-                          : null,
-                    ),
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Input(
+                        label: "Nome",
+                        validator: (text) => text == null || text.isEmpty
+                            ? "Preencha o Nome."
+                            : null,
+                        onSaved: (value) => formData['name'] = value!,
+                      ),
+                      Input(
+                        label: "Descrição",
+                        maxline: 5,
+                        validator: (text) => text == null || text.isEmpty
+                            ? "Preencha o Descrição."
+                            : null,
+                        onSaved: (value) => formData['description'] = value!,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: (MediaQuery.of(context).size.width - 50) / 2,
+                            child: InputDate(
+                              label: "Data",
+                              validator: (text) => text == null || text.isEmpty
+                                  ? "Preencha a data."
+                                  : null,
+                              onSaved: (value) => formData['date'] = value!,
+                            ),
+                          ),
+                          SizedBox(
+                            width: (MediaQuery.of(context).size.width - 50) / 2,
+                            child: InputTime(
+                              label: "Hora",
+                              validator: (text) => text == null || text.isEmpty
+                                  ? "Preencha a hora."
+                                  : null,
+                              onSaved: (value) => formData['time'] = value!,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
